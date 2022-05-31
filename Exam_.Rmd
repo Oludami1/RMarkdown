@@ -1,0 +1,31 @@
+---
+title: "RP-500% POSITIVE"
+author: "Dami"
+date: "5/27/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## RP 500% Positive Change layer
+
+This is a try on R Markdown document. Plotting from the generated RP-500% Positive report from SQL .
+
+```{r echo=FALSE}
+library(readxl)
+library(tidyverse)
+RP_Positive<-read_xlsx("C:/Users/obamikefa/OneDrive - Alachua County Property Appraiser/Excel/RP - 500% Positive Change.xlsx")
+```
+
+## CurrentYrP_use Vs TotalValue_Market
+All NA was removed before plotting.
+```{r ggplot2, echo=FALSE}
+library(ggplot2)
+df = RP_Positive[complete.cases(RP_Positive),]
+colnames(df)[2:3] <- c("CurrentYrP_USE","PreviousYrP_USE")
+df$TotalValue<-df$CurrentYr_Market + as.numeric(df$PreviousYr_Market)
+ggplot(df, 
+       aes(x = CurrentYrP_USE, y =TotalValue)) + geom_point()+ geom_smooth(method = lm, col = "red")
+```
