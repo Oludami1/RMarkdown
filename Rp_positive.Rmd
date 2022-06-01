@@ -1,7 +1,7 @@
 ---
-title: "RP-500% POSITIVE"
+title: "RP_500%_Change"
 author: "Dami"
-date: "5/27/2022"
+date: "5/31/2022"
 output: html_document
 ---
 
@@ -9,8 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## RP 500% Positive Change layer
-
+## RP 500% Positve Change
 This is a try on R Markdown document. Plotting from the generated RP-500% Positive report from SQL .
 
 ```{r echo=FALSE}
@@ -20,12 +19,28 @@ RP_Positive<-read_xlsx("C:/Users/obamikefa/OneDrive - Alachua County Property Ap
 ```
 
 ## CurrentYrP_use Vs TotalValue_Market
-All NA was removed before plotting.
+All N/A was removed before plotting.
+
 ```{r ggplot2, echo=FALSE}
 library(ggplot2)
+library(gridExtra)
 df = RP_Positive[complete.cases(RP_Positive),]
 colnames(df)[2:3] <- c("CurrentYrP_USE","PreviousYrP_USE")
 df$TotalValue<-df$CurrentYr_Market + as.numeric(df$PreviousYr_Market)
-ggplot(df, 
-       aes(x = CurrentYrP_USE, y =TotalValue)) + geom_point()+ geom_smooth(method = lm, col = "red")
+
+P1 <- ggplot(df, 
+       aes(x = CurrentYrP_USE, y =MarketChange)) + geom_point()+ geom_smooth(method = lm, col = "coral")
+
+P2 <- ggplot(df, 
+             aes(x = CurrentYrP_USE, y = AssessedChange)) +  geom_point(alpha=.3) +
+    geom_smooth(alpha=.2, size=1, col = "green") 
+
+P3 <- ggplot(df, 
+       aes(x = factor(CurrentYrP_USE))) + geom_bar(fill = "red") + theme_classic()
+
+P4 <- ggplot(df,
+             aes(x = PreviousYrP_USE)) + geom_bar(fill = "blue") + theme_classic()
+
+grid.arrange(P1,P2,P3,P4)
+
 ```
