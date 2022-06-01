@@ -12,13 +12,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ## RP 500% Positve Change
 This is a try on R Markdown document. Plotting from the generated RP-500% Positive report from SQL .
 
+## Loading needed packages and importing dataset 
+
 ```{r echo=FALSE}
 library(readxl)
 library(tidyverse)
 RP_Positive<-read_xlsx("C:/Users/obamikefa/OneDrive - Alachua County Property Appraiser/Excel/RP - 500% Positive Change.xlsx")
 ```
 
-## CurrentYrP_use Vs TotalValue_Market
+## Different plots showing CurrentYrP_use Vs MarketChange/CurrentYrP_Use Vs AssessedChange/CurrentYrP_Use/PreviousYrP_use
 All N/A was removed before plotting.
 
 ```{r ggplot2, echo=FALSE}
@@ -39,7 +41,7 @@ P3 <- ggplot(df,
        aes(x = factor(CurrentYrP_USE))) + geom_bar(fill = "red") + theme_classic()
 
 P4 <- ggplot(df,
-             aes(x = PreviousYrP_USE)) + geom_bar(fill = "blue") + theme_classic()
+             aes(x = factor(PreviousYrP_USE))) + geom_bar(fill = "blue") + theme_classic()
 
 grid.arrange(P1,P2,P3,P4)
 
