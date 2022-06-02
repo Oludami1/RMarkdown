@@ -3,16 +3,21 @@ title: "RP_500%_Change"
 author: "Dami"
 date: "5/27/2022"
 output: html_document
+code_folding: "hide"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	comment = NA
+)
 ```
 
 ## RP 500% Positve Change
 This is a try on R Markdown document. Plotting from the generated RP-500% Positive report from SQL .
 
-## Loading needed packages and importing dataset 
+## Loading needed packages and importing dataset for analysis
 
 ```{r echo=FALSE}
 library(readxl)
@@ -41,7 +46,8 @@ P3 <- ggplot(df,
        aes(x = factor(CurrentYrP_USE))) + geom_bar(fill = "red") + theme_classic()
 
 P4 <- ggplot(df,
-             aes(x = factor(PreviousYrP_USE))) + geom_bar(fill = "blue") + theme_classic()
+             aes(x =factor(PreviousYrP_USE))) + geom_bar(fill = "blue") + theme_classic()
+
 
 grid.arrange(P1,P2,P3,P4)
 
